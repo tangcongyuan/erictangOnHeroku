@@ -73,3 +73,5 @@ git push heroku master
 heroku ps:scale web=1
 heroku open
 ```
+
+*Important* Make migration on local dev machine before do a `heroku run python manage.py makemigrations` or `heroku run python manage.py migrate`
