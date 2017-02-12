@@ -9,8 +9,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-# Overwitten by Eric, for last_login field in Account model
-!env/Lib/site-packages/rest_framework_jwt/views.py
 build/
 develop-eggs/
 dist/
