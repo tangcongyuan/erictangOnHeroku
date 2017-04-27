@@ -176,5 +176,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # For CORS
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
+    'localhost:3000',
+    'localhost:5000',
+    'https://etangular.herokuapp.com'
 )
