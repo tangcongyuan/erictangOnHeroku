@@ -16,7 +16,7 @@ class AccountManager(BaseUserManager):
         if not kwargs.get('username'):
             raise ValueError('Users must have a valid username.')
 
-        if not kwargs.get('password') == kwargs.get('confirm_password')
+        if not password == kwargs.get('confirm_password'):
             raise ValueError('Please verify your password.')
 
         account = self.model(

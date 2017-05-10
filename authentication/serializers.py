@@ -35,8 +35,8 @@ from authentication.models import Account
 #             return instance
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
-    password = serializers.CharField(write_only=True, required=False)
-    confirm_password = serializers.CharField(write_only=True, required=False)
+    password = serializers.CharField(write_only=True, required=True)
+    confirm_password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = Account
