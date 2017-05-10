@@ -21,15 +21,22 @@ class AccountList(generics.ListCreateAPIView):
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
 
-        if serializer.is_valid():
-            Account.objects.create_user(**serializer.validated_data)
-
-            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-
-        return Response({
-            'status': 'Bad request',
-            'message': 'Account could not be created with received data.'
-        }, status=status.HTTP_400_BAD_REQUEST)
+        # if serializer.is_valid():
+        try:
+            # Account.objects.create_user(**serializer.validated_data)
+            # return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+            Account.objects.create_user(**serializer.initial_data) # Use initial_data to let the database to catch the exception and return corresponding error msg.
+            return Response(serializer.initial_data, status=status.HTTP_201_CREATED)
+        except ValueError as e:
+            return Response({
+                'status': 'Bad request',
+                'message': str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            return Response({
+                'status': 'Bad request',
+                'message': 'Account could not be created with received data.'
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 class AccountDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Account.objects.all()
