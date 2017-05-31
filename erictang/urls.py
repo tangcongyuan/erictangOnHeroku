@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^auth/', include('authentication.urls')),
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-verify/', verify_jwt_token),
+    # Python Social Auth
+    url('', include('social_django.urls', namespace='social')),
 ]

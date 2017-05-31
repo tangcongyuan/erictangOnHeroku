@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
 	'corsheaders',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Python Social Auth
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -180,3 +184,38 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:5000',
     'etangular.herokuapp.com'
 )
+
+# For Python Social Auth ################################################
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'QCNPxqHxx36rdWteEa85A7oB'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '226394122683-55kajnqeb78k1me2bk8dfcb9tg340u2i.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+]
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/auth/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/auth/accounts/'
+
+# Actually for Native Django ############################################
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.yahoo.YahooOpenId',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.social_auth.associate_by_email',  # Associate users by email
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+#########################################################################
